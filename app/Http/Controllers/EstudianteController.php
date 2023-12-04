@@ -25,6 +25,11 @@ class EstudianteController extends Controller
 
     public function putEdit(Request $request,$id) {
             $estudiante=Estudiante::FindOrFail($id);
+
+            $path = $request->file('avatar')->store('avatars', ['disk' => 'public']);
+            $estudiante->avatar = $path;
+            $estudiante->save();
+
             $estudiante->update($request->all());
             return redirect(action([self::class,'getShow'],["id"=>$estudiante->id]));
     }
