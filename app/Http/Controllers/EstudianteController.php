@@ -23,11 +23,15 @@ class EstudianteController extends Controller
             ->with("estudiante", Estudiante::findOrFail($id));
     }
 
-    public function putEdit($id) {
-        return view('estudiantes.edit')
-            ->with("estudiante", Estudiante::findOrFail($id));
+    public function putEdit(Request $request,$id) {
+            $estudiante=Estudiante::FindOrFail($id);
+            $estudiante->update($request->all());
+            return redirect(action([self::class,'getShow'],["id"=>$estudiante->id]));
     }
-
+    public function store(Request $request) {
+        $estudiante = Estudiante::create($request->all());
+        return redirect(action([self::class,'getShow'],["id"=>$estudiante->id]));
+    }
     public function getCreate(){
         return view('estudiantes.create');
     }
