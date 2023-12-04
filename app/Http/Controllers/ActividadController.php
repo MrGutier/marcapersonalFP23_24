@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Actividad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,26 +11,26 @@ class ActividadController extends Controller
 
 
     public function getIndex(){
-        $actividades = DB::table('actividades')->get();
+        $actividades = Actividad::all();
         return view('actividades.index',['actividades'=>$actividades]);
     }
 
     public function getShow($id)
     {
-        $actividadSeleccionada = DB::table('actividades')->findOr($id);
+        $actividadSeleccionada = Actividad::findOrFail($id);
         return view('actividades.show')
             ->with('actividad', $actividadSeleccionada);
     }
 
     public function getEdit($id) {
-        $actividadSeleccionada = DB::table('actividades')->findOr($id);
+        $actividadSeleccionada = Actividad::findOrFail($id);
         return view('actividades.edit')
             ->with("actividad",$actividadSeleccionada);
 
     }
 
     public function putEdit($id) {
-        $actividadSeleccionada = DB::table('actividades')->findOr($id);
+        $actividadSeleccionada = Actividad::findOrFail($id);
         return view('actividades.edit')
             ->with("actividad",$actividadSeleccionada);
 
